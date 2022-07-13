@@ -36,9 +36,33 @@ public class FXMLController {
     @FXML // fx:id="txtResult"
     private TextArea txtResult; // Value injected by FXMLLoader
 
+    
+    
+    
+    
+    
     @FXML
     void doContaArchi(ActionEvent event) {
 
+    	String nsoglia= txtSoglia.getText();
+    	Integer soglia;
+    	try {
+			   soglia= Integer.parseInt(nsoglia);
+		   } catch(NumberFormatException ne) {
+			   txtResult.appendText("le soglie devono essere un numero");
+			   return;
+		   }
+    	if(soglia > model.getMigliore() || soglia< model.getPeggiore()) {
+    		txtResult.appendText("scegli un valore nel range");
+			   return;
+    	}
+    	txtResult.appendText("\n "
+    			+ "\n"
+    			+ "\n");
+    	
+    	
+    	txtResult.appendText(this.model.getSoglia(soglia));
+    	
     }
 
     @FXML
@@ -58,5 +82,12 @@ public class FXMLController {
 	public void setModel(Model model) {
 		this.model = model ;
 		
+		
+		this.model.creaGrafo();
+		
+		txtResult.appendText("Grafo creato con : \n");
+		txtResult.appendText("Vertici : " + model.getVertici() + "\n");
+		txtResult.appendText("Vertici : " + model.getArchi() + "\n");
+		txtResult.appendText("migliore   " + model.getMigliore() + "   peggiore  " + model.getPeggiore());
 	}
 }
